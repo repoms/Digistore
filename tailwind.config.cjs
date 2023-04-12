@@ -1,27 +1,27 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
-  ],
-  theme: {
-    
-    fontSize: {
-      ssm: '0.85rem',
-    },
+	content: [
+		"./index.html",
+		"./src/**/*.{vue,js,ts,jsx,tsx}",
+	],
+	theme: {
+		fontSize: {
+			xs: '0.75rem',
+			ssm: '0.85rem',
+		},
 
-    fontFamily: {
-      'body': ['Basic font']
-    },
-    extend: {
-      dropShadow: { 
-        'med': '0 7px 15px rgba(0, 0, 0, 0.10)'
-      }
-    },
-  },
-  plugins: [require("daisyui")],
-  daisyui: {
-    themes: ["light"]
-  }
+		fontFamily: {
+			'body': ['Basic font']
+		},
+		extend: {
+			dropShadow: { 
+				'med': '0 7px 15px rgba(0, 0, 0, 0.10)'
+			}
+		},
+	},
+	plugins: [require("daisyui")],
+	daisyui: {
+		themes: ["light"]
+	}
 
 }
