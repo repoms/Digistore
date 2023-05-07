@@ -1,20 +1,21 @@
 
-
 <template>
     <Navbar />
-    <BaseLayout>
-        <div class="container mx-auto w-3/4 flex justify-center items-center flex-wrap p-6 py-10">
+    <div class="min-h-screen">
+        <div class="container mx-auto w-5/6 flex justify-center items-center flex-wrap p-6 py-10">
             <Card v-for="product in allProduct" :product="product"/>
         </div>
-    </BaseLayout>
+    </div>
 </template>
 
 <script>
+import Navbar from '../../containers/Navbar.vue';
 import Card from '../../components/Card.vue';
 
 export default {
     inject: ["allProduct"],
     components: {
+        Navbar,
         Card,
     },
 }

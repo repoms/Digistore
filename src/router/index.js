@@ -12,9 +12,29 @@ const routes = [
         component: () => import('../pages/Login.vue')
     },
     {
+		path: '/:pathMatch(.*)*',
+		name: 'NotFound',
+		component: () => import('../pages/NotFound.vue'),
+	},
+    {
         path: '/cart',
         name: 'Cart',
         component: () => import('../pages/Customer/Cart.vue')
+    },
+    {
+        path: '/admin',
+        children: [
+            {
+                path: '',
+                name: 'Admin',
+                component: () => import('../pages/Admin/Home.vue')
+            },
+            {
+                path: 'produk',
+                name: 'AdminProduk',
+                component: () => import('../pages/Admin/Product.vue')
+            },
+        ]
     },
 ]
 

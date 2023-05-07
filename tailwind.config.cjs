@@ -5,10 +5,10 @@ module.exports = {
 		"./src/**/*.{vue,js,ts,jsx,tsx}",
 	],
 	theme: {
-		fontSize: {
-			xs: '0.75rem',
-			ssm: '0.85rem',
-		},
+		// fontSize: {
+		// 	xs: '0.75rem',
+		// 	ssm: '0.85rem',
+		// },
 
 		fontFamily: {
 			'body': ['Basic font']

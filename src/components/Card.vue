@@ -1,14 +1,16 @@
 <template>
     
-    <div class="flex flex-col p-3 md:w-1/3 xl:w-1/4">
-        <div class="card bg-base-100 shadow-xl w-full">
+    <div class="p-1.5 md:w-1/3 xl:w-1/6">
+        <div class="card card-compact bg-base-100 shadow-xl w-full">
             <figure><img :src="product.Image" alt="Shoes" /></figure>
             <div class="card-body">
-                <h2 class="card-title">
+                <h2 class="card-title text-base">
                     {{ product.Name }}
-                    <!-- <div class="badge badge-secondary" v-if="isNew">NEW</div> -->
                 </h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
+                <div class="badge bg-orange-400 border-none font-semibold">
+                    <span class="text-xs">Rp</span>
+                    {{ product.Price }}
+                </div>
             </div>
         </div>
     </div>
