@@ -13,9 +13,9 @@ app.use(router)
 // const pinia = createPinia()
 // app.use(pinia)
 
-
+import checkAuth from './features/config/auth'
 router.beforeEach(async (to, from) => {
-	// return checkAuth(to, from)
+	return checkAuth(to, from)
 })
 
 // Injection
@@ -28,13 +28,6 @@ FaSetup()
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 app.component('font-awesome-icon', FontAwesomeIcon)
-
-
-const endApi = {
-    register: "https://localhost:44347/api/login/register",
-    login: "https://localhost:44347/api/login",
-}
-app.provide("endApi", endApi)
 
 
 app.mount('#app')

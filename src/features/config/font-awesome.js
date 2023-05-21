@@ -1,9 +1,19 @@
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faFaceFrownOpen } from '@fortawesome/free-solid-svg-icons'
+import {
+    faFaceFrownOpen,
+    faMagnifyingGlass,
+    faUser,
+    faPeopleCarryBox,
+} from '@fortawesome/free-solid-svg-icons'
 
 const FaSetup = () => {
-    library.add(faFaceFrownOpen)
+    library.add(
+        faFaceFrownOpen,
+        faMagnifyingGlass,
+        faUser,
+        faPeopleCarryBox,
+    )
 }
 
 export default FaSetup

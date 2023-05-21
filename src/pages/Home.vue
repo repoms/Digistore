@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import Navbar from '../../containers/Navbar.vue';
-import Card from '../../components/Card.vue';
+import Navbar from '../components/Navbar.vue';
+import Card from '../components/Card.vue';
 
 export default {
     inject: ["allProduct"],
