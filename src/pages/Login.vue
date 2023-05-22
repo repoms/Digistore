@@ -16,7 +16,7 @@
 					<label class="label">
 						<span class="text-base font-semibold label-text">Password</span>
 					</label>
-					<input v-model="password" type="text" class="text-sm input input-bordered" :class="checkPassword" />
+					<input v-model="password" type="password" class="text-sm input input-bordered" :class="checkPassword" />
 					<label class="label">
 						<a href="#" class="text-s italic label-text-alt link link-hover">Forgot password?</a>
 					</label>
@@ -77,17 +77,22 @@ export default {
 		async submit() {
 			if (!this.checkForm()) return;
 			
-			const res = await axios.post(apiHandler.BASE_API + apiHandler.END_API.login, {
-				"Username": this.username,
-				"Password": this.password,
-			})
-			const Result = await res.data
-
-			if (Result.Status == "bad") return this.isFailed = true
-
-			if (Result.Status == "ok") {
-				localStorage.setItem("token", Result.Data)
-				return this.$router.push({ name: "Home" })
+			try {
+				const res = await axios.post(apiHandler.BASE_API + apiHandler.END_API.login, {
+					"Username": this.username,
+					"Password": this.password,
+				})
+				
+				const Result = await res.data
+	
+				if (Result.Status == "bad") return this.isFailed = true
+	
+				if (Result.Status == "ok") {
+					localStorage.setItem("token", Result.Data)
+					return this.$router.push({ name: "Home" })
+				}
+			} catch (error) {
+				console.log(error)
 			}
 		},
 	},

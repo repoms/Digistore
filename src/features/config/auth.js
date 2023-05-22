@@ -13,7 +13,11 @@ const checkAuth = async (to, from) => {
     if (!to.meta.role) return
 
     // Auth Page
-    const res = await axios.post(apiHandler.BASE_API + apiHandler.END_API.role, { "Role": to.meta.role })
+    const res = await axios.post(
+        apiHandler.BASE_API + apiHandler.END_API.role,
+        { "Role": to.meta.role },
+        { headers: { 'Authorization': 'Bearer ' + TOKEN }}
+    )
     const access = res.data
     console.log(res.status)
 

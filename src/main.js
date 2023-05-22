@@ -9,9 +9,9 @@ import router from './router'
 app.use(router)
 
 // Pinia (state management)
-// import { createPinia } from 'pinia'
-// const pinia = createPinia()
-// app.use(pinia)
+import { createPinia } from 'pinia'
+const pinia = createPinia()
+app.use(pinia)
 
 import checkAuth from './features/config/auth'
 router.beforeEach(async (to, from) => {

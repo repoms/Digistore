@@ -16,7 +16,7 @@
 					<label class="label">
 						<span class="text-base font-semibold label-text">Password</span>
 					</label>
-					<input v-model="password" type="text" class="text-sm input input-bordered" :class="checkPassword" />
+					<input v-model="password" type="password" class="text-sm input input-bordered" :class="checkPassword" />
 				</div>
 
 				<div class="form-control">

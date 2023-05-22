@@ -4,6 +4,7 @@ const END_API = {
     login: "login",
     register: "register",
     role: "role",
+    user: "user",
 }
 
 
