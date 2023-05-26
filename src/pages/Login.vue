@@ -23,7 +23,7 @@
 				</div>
 
 				<div class="form-control">
-					<button @click="submit" class="btn rounded-full border-transparent drop-shadow-med bg-orange-400">
+					<button @click="submit" class="btn rounded-full border-transparent drop-shadow-med bg-primary">
 						Login
 					</button>
 				</div>
@@ -35,7 +35,7 @@
 					</label>
 				</div>
 
-				<router-link :to="{name: 'Register'}" class="link text-sm text-orange-400 flex justify-center">
+				<router-link :to="{name: 'Register'}" class="link text-sm text-primary flex justify-center">
 					Don't have an account?
 				</router-link>
 			</div>

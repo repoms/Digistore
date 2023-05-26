@@ -13,13 +13,20 @@ const checkAuth = async (to, from) => {
     if (!to.meta.role) return
 
     // Auth Page
-    const res = await axios.post(
-        apiHandler.BASE_API + apiHandler.END_API.role,
-        { "Role": to.meta.role },
-        { headers: { 'Authorization': 'Bearer ' + TOKEN }}
-    )
-    const access = res.data
-    console.log(res.status)
+    let res = null
+    let access = null
+    try {
+        res = await axios.post(
+            apiHandler.BASE_API + apiHandler.END_API.role,
+            { "Role": to.meta.role },
+            { headers: { 'Authorization': 'Bearer ' + TOKEN }}
+        )
+        access = await res.data
+        console.log(res.status)
+    } catch (error) {
+        console.log(error)
+        return { name: "Login", redirect: to.fullPath }
+    }
 
     // Unauthorized
     if (res.status == 401) return { name: "Login", redirect: to.fullPath }

@@ -15,17 +15,29 @@
 
         <!-- Left Sidebar -->
         <LeftSidebar></LeftSidebar>
+
+        <!-- Notification -->
+        <div class="toast toast-end toast-top w-1/5 mr-3">
+            <Notification v-for="notif in notifStore.listNotif" :notif="notif" />
+        </div>
     </div>
 </template>
 
 <script>
 import LeftSidebar from './LeftSidebar.vue';
 import Navbar from './Navbar.vue';
+import Notification from './Notification.vue';
+import { useNotificationStore } from '../../../features/stores/notification';
 
 export default {
+    setup() {
+        const notifStore = useNotificationStore()
+        return { notifStore }
+    },
     components: {
         LeftSidebar,
-        Navbar
+        Navbar,
+        Notification,
     }
 }
 </script>

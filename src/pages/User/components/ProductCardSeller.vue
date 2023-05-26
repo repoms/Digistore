@@ -6,15 +6,13 @@
         </figure>
         <div class="card-body gap-0">
             <p class="font-semibold">{{ product.Name }}</p>
-            <div class="grid grid-cols-2">
-                <div class="text-orange-400 font-semibold w-full">
-                    {{ product.Price }}
-                </div>
-                <div class="font-medium justify-self-end">
-                    Stok <span class="font-semibold">{{ product.Stock }}</span>
-                </div>
+            <div class="text-orange-400 font-semibold w-full">
+                {{ product.Price }}
             </div>
-            <p class="text-center text-xs">Penjualan {{ product.Sold }}</p>
+            <div class="font-medium flex justify-start">
+                Stok <span class="font-semibold ml-2">{{ product.Stock }}</span>
+            </div>
+            <p class="text-xs">Penjualan {{ product.Sold }}</p>
         </div>
     </div>
 </template>

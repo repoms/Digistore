@@ -39,12 +39,12 @@
 				</div>
 
 				<div class="form-control">
-					<button @click="submit" class="btn rounded-full border-transparent drop-shadow-med bg-orange-400 mt-5">
+					<button @click="submit" class="btn rounded-full border-transparent drop-shadow-med bg-primary mt-5">
 						Register
 					</button>
 				</div>
 
-				<router-link :to="{name: 'Login'}" class="link text-sm text-orange-400 flex justify-center mt-5">
+				<router-link :to="{name: 'Login'}" class="link text-sm text-primary flex justify-center mt-5">
 					Sudah punya akun?
 				</router-link>
 			</div>

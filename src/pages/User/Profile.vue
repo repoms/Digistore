@@ -7,9 +7,12 @@
 
 		<!-- Content -->
 		<div class="h-full w-full pb-6">
-			<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-				<TextInput title="Nama" v-model="nama" />
-				<TextInput title="Username" v-model="username" />
+			<div class="grid grid-cols-5 gap-6">
+				<p class="justify-self-end place-self-center">Nama</p>
+				<TextInput v-model="nama" class="col-span-4" />
+
+				<p class="justify-self-end place-self-center">Username</p>
+				<TextInput v-model="username" class="col-span-4" />
 			</div>
 
 			<div class="mt-16">

@@ -5,7 +5,7 @@
         <div class="w-full" @click="isExpanded = !isExpanded">
             <font-awesome-icon :icon="route.icon" class="w-5 h-5 mr-2" />
             {{ route.name }}
-            <font-awesome-icon icon="fa-solid fa-chevron-down" class="w-5 h-5 mt-1 float-right delay-400 duration-500 transition-all" :class="isExpanded? 'rotate-180' : ''" />
+            <font-awesome-icon icon="fa-solid fa-chevron-down" class="w-5 h-5 mt-1 float-right delay-300 duration-500 transition-all" :class="isExpanded? 'rotate-180' : ''" />
         </div>
 
         <!-- Submenu -->

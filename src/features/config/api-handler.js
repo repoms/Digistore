@@ -5,6 +5,7 @@ const END_API = {
     register: "register",
     role: "role",
     user: "user",
+    product: "product",
 }
 
 

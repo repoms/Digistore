@@ -5,7 +5,6 @@ import Register from '../pages/Register.vue'
 import NotFound from '../pages/NotFound.vue'
 
 import UserLayout from '../pages/user/components/Layout.vue'
-import LeftSidebar from '../pages/user/components/LeftSidebar.vue'
 import Profile from '../pages/user/Profile.vue'
 import Cart from '../pages/user/Cart.vue'
 import TokoProduct from '../pages/user/toko/Product.vue'
@@ -85,7 +84,7 @@ const routes = [
                 path: 'produk',
                 name: 'AdminProduk',
                 component: () => import('../pages/admin/Product.vue'),
-                // meta: { requiresAuth: true, role: "admin" },
+                meta: { requiresAuth: true, role: "admin" },
             },
         ]
     },

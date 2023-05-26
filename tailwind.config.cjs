@@ -5,11 +5,6 @@ module.exports = {
 		"./src/**/*.{vue,js,ts,jsx,tsx}",
 	],
 	theme: {
-		// fontSize: {
-		// 	xs: '0.75rem',
-		// 	ssm: '0.85rem',
-		// },
-
 		fontFamily: {
 			'body': ['Basic font']
 		},
@@ -21,7 +16,14 @@ module.exports = {
 	},
 	plugins: [require("daisyui")],
 	daisyui: {
-		themes: ["light"]
+		themes: [
+			{
+				light: {
+					...require("daisyui/src/colors/themes")["[data-theme=light]"],
+					primary: "#FB933C",
+				}
+			}
+		]
 	}
 
 }

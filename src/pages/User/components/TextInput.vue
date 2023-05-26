@@ -1,16 +1,11 @@
 <template>
-    <div class="form-control w-full">
-        <label class="label">
-            <span class="text-base label-text">{{ title }}</span>
-        </label>
-        <input v-model="value" type="text" @keypress="NumbersOnly" class="text-sm input input-bordered" v-if="number" />
-        <input v-model="value" type="text" class="text-sm input input-bordered" v-else />
-    </div>
+    <input v-model="value" type="text" @keypress="NumbersOnly" class="text-sm input input-bordered" v-if="number" />
+    <input v-model="value" type="text" class="text-sm input input-bordered" v-else />
 </template>
 
 <script>
 export default {
-    props: ['title', 'value', 'modelValue', 'number'],
+    props: ['value', 'modelValue', 'number'],
     emits: ['update:modelValue'],
     computed: {
         value: {

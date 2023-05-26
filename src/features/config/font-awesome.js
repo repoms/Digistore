@@ -13,10 +13,16 @@ import {
     faGifts,
     faCirclePlus,
     faParachuteBox,
+    faPlus,
+    faXmark,
+    faCircleCheck,
 } from '@fortawesome/free-solid-svg-icons'
 
 const FaSetup = () => {
     library.add(
+        faCircleCheck,
+        faXmark,
+        faPlus,
         faParachuteBox,
         faGifts,
         faCirclePlus,
