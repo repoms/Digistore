@@ -3,7 +3,7 @@
     <div class="card min-w-min mx-7 p-6 shadow-xl bg-base-100">
         <!-- Title -->
         <div class="text-xl font-semibold inline-block">
-            Produk Baru
+            Edit Produk
         </div>
 
         <div class="divider"></div>
@@ -16,15 +16,15 @@
 
                 <p class="justify-self-end place-self-center col-start-1">Image</p>
                 <div class="col-span-4 flex flex-wrap gap-2">
-                    <ButtonFileInput @addFile="addFile" @removeFile="removeFile" />
-                    <div class="divider divider-horizontal m-2"></div>
-                    <ButtonFileInput @addFile="addFile" @removeFile="removeFile" />
-                    <div class="divider divider-horizontal m-2"></div>
-                    <ButtonFileInput @addFile="addFile" @removeFile="removeFile" />
-                    <div class="divider divider-horizontal m-2"></div>
-                    <ButtonFileInput @addFile="addFile" @removeFile="removeFile" />
-                    <div class="divider divider-horizontal m-2"></div>
-                    <ButtonFileInput @addFile="addFile" @removeFile="removeFile" />
+                    <template v-for="imageSrc in lastImage">
+                        <ButtonFileInput @addFile="addFile" @removeFile="removeFile" :imageSrc="imageSrc" />
+                        <div class="divider divider-horizontal m-2"></div>
+                    </template>
+
+                    <template v-for="n in lengthButton" v-if="!isEnoughButton">
+                        <ButtonFileInput @addFile="addFile" @removeFile="removeFile" />
+                        <div class="divider divider-horizontal m-2"></div>
+                    </template>
                 </div>
 
                 <p class="justify-self-end place-self-center col-start-1">Price</p>
@@ -45,7 +45,7 @@
                     @click="submitProduct"
                     class="btn rounded-full border-transparent drop-shadow-med bg-primary float-right transition ease-in-out hover:scale-110"
                 >
-                    Tambah Produk
+                    Update Produk
                 </button>
             </div>
         </div>
@@ -84,12 +84,19 @@ export default {
             stock: "",
             description: "",
             images: [],
+            lastImage: [],
             loading: false,
         }
     },
     computed: {
         checkLoading() {
             return this.loading ? " modal-open" : ""
+        },
+        isEnoughButton() {
+            return this.lastImage.length >= 5
+        },
+        lengthButton() {
+            return 5 - this.lastImage.length
         }
     },
     methods: {
@@ -106,6 +113,7 @@ export default {
             console.log(this.images)
 
             let formData = toFormData({
+                "Guid": this.$route.params.guid,
                 "Title": this.title,
                 "Description": this.description,
                 "Price": this.price,
@@ -115,9 +123,7 @@ export default {
                 formData.append(file.guid, file.image)
             });
 
-            console.log(formData)
-
-            const Result = await apiHandler.PRE_API.SellerAddNewProduct(formData)
+            const Result = await apiHandler.PRE_API.SellerUpdateProduct(formData)
             console.log(Result)
 
             if (Result.Status == "ok") {
@@ -130,6 +136,32 @@ export default {
                 this.loading = false
                 this.notifStore.addNotif("error", Result.Message, "xmark")
             }
+        }
+    },
+    async beforeMount() {
+        // Ambil product dari api
+        const Result = await apiHandler.PRE_API.GetProductByGuid(this.$route.params.guid)
+        console.log(Result)
+
+        if (Result.Status == "ok") {
+            // Parse datanya
+            const Data = JSON.parse(Result.Data)
+            console.log(Data)
+            this.title = Data.Title
+            this.description = Data.Description
+            this.price = Data.Price
+            this.stock = Data.Stock
+
+            // cek gambarny null atau tidak
+            if (!Data.Image) return
+
+            this.lastImage = JSON.parse(Data.Image)
+            console.log(this.lastImage)
+            return
+        }
+
+        if (Result.Status == "bad") {
+            this.notifStore.addNotif("error", Result.Message, "xmark")
         }
     }
 }

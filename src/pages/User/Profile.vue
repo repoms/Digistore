@@ -9,46 +9,76 @@
 		<div class="h-full w-full pb-6">
 			<div class="grid grid-cols-5 gap-6">
 				<p class="justify-self-end place-self-center">Nama</p>
-				<TextInput v-model="nama" class="col-span-4" />
+				<TextInput v-model="displayName" class="col-span-4" />
 
 				<p class="justify-self-end place-self-center">Username</p>
-				<TextInput v-model="username" class="col-span-4" />
+				<TextInput v-model="username" class="col-span-4" disabled />
 			</div>
 
 			<div class="mt-16">
-				<button class="btn rounded-full border-transparent drop-shadow-med bg-orange-400 float-right">Update</button>
+				<button @click="updateUser" class="btn rounded-full border-transparent drop-shadow-med bg-primary float-right">Update</button>
 			</div>
 		</div>
 	</div>
+
+	<div class="modal" :class="checkLoading">
+        <font-awesome-icon icon="fa-solid fa-parachute-box" class="animate-spin w-36 h-36" />
+    </div>
 </template>
 
 
 <script>
 import TextInput from './components/TextInput.vue';
-import axios from 'axios'
 import apiHandler from '../../features/config/api-handler';
+import { useNotificationStore } from '../../features/stores/notification';
 
 export default {
+	setup() {
+        const notifStore = useNotificationStore()
+        return { notifStore }
+    },
 	components: {
 		TextInput
 	},
     data() {
         return {
-            nama: "",
+            displayName: "",
             username: "",
+			loading: false,
         }
     },
-	async mounted() {
-		const TOKEN = localStorage.getItem("token")
-		const res = await axios.get(
-			apiHandler.BASE_API + apiHandler.END_API.user,
-			{ headers: { 'Authorization': 'Bearer ' + TOKEN }}
-		)
-		console.log(res.data.Data)
+	computed: {
+		checkLoading() {
+            return this.loading ? " modal-open" : ""
+        }
+	},
+	methods: {
+		async updateUser() {
+			if (!this.displayName) {
+				this.notifStore.addNotif("error", "Fill in your Name", "xmark")
+				return
+			}
+			
+			this.loading = true
+			const Result = await apiHandler.PRE_API.UserUpdateUser(this.displayName)
 
-		const Result = await res.data
+			if (Result.Status == "ok") {
+				this.loading = false
+				this.notifStore.addNotif("success", Result.Message, "circle-check")
+				return
+			}
+			
+			if (Result.Status == "bad") {
+				this.loading = false
+                this.notifStore.addNotif("error", Result.Message, "xmark")
+            }
+		}
+	},
+	async mounted() {
+		const Result = await apiHandler.PRE_API.GetSelfInfo()
+		console.log(Result)
 		const Data = JSON.parse(Result.Data)
-		this.nama = Data.DisplayName
+		this.displayName = Data.DisplayName
 		this.username = Data.Username
 	}
 }

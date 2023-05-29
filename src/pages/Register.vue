@@ -1,5 +1,5 @@
 <template>
-	<div class="min-h-screen flex items-center">
+	<div class="flex items-center mt-10">
 		<div class="card mx-auto w-full max-w-md shadow-2xl bg-base-100">
 			<div class="card-body">
 				<div class="text-center font-semibold" :class="errorClass" v-if="errorMessage.length">
@@ -53,7 +53,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import apiHandler from '../features/config/api-handler';
 
 export default {
@@ -69,14 +68,6 @@ export default {
 		};
 	},
 	computed: {
-		userDTO() {
-			let role = this.role ? "kurir" : "user"
-			return {
-				"Username": this.username,
-				"Password": this.password,
-				"Role": role,
-			}
-		},
 		checkUsername() {
 			if (this.errors == 1 || this.errors == 3) return this.classError
 		},
@@ -96,8 +87,8 @@ export default {
 		async submit() {
 			if (!this.checkForm()) return;
 
-			const res = await axios.post(apiHandler.BASE_API + apiHandler.END_API.register, this.userDTO)
-			const Result = await res.data
+			let role = this.role ? "kurir" : "user"
+			const Result = await apiHandler.PRE_API.Register(this.username, this.password, role)
 			
 			this.errorMessage = Result.Message
 			if (Result.Status == "bad") this.errorClass = "text-error"

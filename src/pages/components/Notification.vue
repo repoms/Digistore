@@ -16,7 +16,7 @@
 
 
 <script>
-import { useNotificationStore } from '../../../features/stores/notification'
+import { useNotificationStore } from '../../features/stores/notification'
 
 export default {
     setup() {
@@ -36,7 +36,6 @@ export default {
             if (this.countdown > 0) {
                 setTimeout(() => {
                     this.countdown--
-                    this.trans = true
                     this.countTimer()
                 }, 1000)
             } else {
@@ -54,13 +53,18 @@ export default {
             return this.notif.status.charAt(0).toUpperCase() + this.notif.status.slice(1)
         },
         alertColor() {
-            return " alert-" + this.notif.status
+            if (this.notif.status == "success") return "alert-success"
+            else if (this.notif.status == "error") return "alert-error"
         },
         slideClass() {
             return this.trans ? " translate-x-0 opacity-100 scale-100" : " translate-x-full opacity-0 scale-75"
         }
     },
     mounted() {
+        setTimeout(() => {
+            this.trans = true
+        }, 300);
+        
         this.countTimer()
     }
 

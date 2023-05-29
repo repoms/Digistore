@@ -23,6 +23,7 @@
 
 <script>
 import utils from '../../../features/utils'
+import apiHandler from '../../../features/config/api-handler'
 import { useNotificationStore } from '../../../features/stores/notification'
 
 const EXTENSION = ["png", "jpg", "jpeg", "webp", "svg"]
@@ -32,6 +33,7 @@ export default {
         const notifStore = useNotificationStore()
         return { notifStore }
     },
+    props: ["imageSrc"],
     data() {
         return {
             guid: null,
@@ -40,26 +42,33 @@ export default {
         }
     },
     methods: {
+        imageToUrl(imageFile) {
+            const fileReader = new FileReader()
+            fileReader.addEventListener('load', () => {
+                this.imageUrl = fileReader.result
+            })
+            fileReader.readAsDataURL(imageFile)
+        },
         onPickFile() {
             this.$refs.fileInput.click()
         },
         onFilePicked(event) {
             const files = event.target.files
-            
+
+            // cek sudah ada pick file belum
+            if (this.guid) this.RemoveImage()
+
             // check file extension
-            this.name = files[0].name
-            let ext = this.name.split('.').pop();
+            let name = files[0].name
+            let ext = name.split('.').pop();
             if (!EXTENSION.includes(ext)) {
                 this.notifStore.addNotif("error", "File must be Image", "xmark")
                 return
             }
+            this.name = name
             
             // convert to url, jadi bisa dipakai sama <img>
-            const fileReader = new FileReader()
-            fileReader.addEventListener('load', () => {
-                this.imageUrl = fileReader.result
-            })
-            fileReader.readAsDataURL(files[0])
+            this.imageToUrl(files[0])
 
             // buat guid
             this.guid = utils.CreateGUID()
@@ -84,6 +93,35 @@ export default {
             this.name = null
             this.imageUrl = null
             console.log("remove image")
+        }
+    },
+    async beforeMount() {
+        // cek ada input image url dari parent atau gak
+        if (!this.imageSrc) return
+
+        // ubah ke blob image
+        const Result = await apiHandler.PRE_API.ImageToBlob(this.imageSrc)
+        console.log(Result)
+        if (Result.Status == "ok") {
+            // ekstrak namany
+            this.name = this.imageSrc.substring(this.imageSrc.lastIndexOf('/') + 1)
+            
+            // ubah imageny ke url untuk ditampilkan di page
+            let imageFile = new File([Result.Data], this.name)
+            this.imageToUrl(imageFile)
+
+            // buat guid
+            this.guid = utils.CreateGUID()
+
+            // buat container file
+            const fileObj = {
+                "guid": this.guid,
+                "name": this.name,
+                "image": imageFile,
+            }
+
+            // kirimkan ke parent component
+            this.$emit('addFile', fileObj)
         }
     }
 }

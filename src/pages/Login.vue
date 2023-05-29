@@ -1,5 +1,5 @@
 <template>
-	<div class="min-h-screen flex items-center">
+	<div class="flex items-center mt-10">
 		<div class="card mx-auto w-full max-w-sm shadow-2xl bg-base-100">
 			<div class="card-body">
 				<div class="text-center font-semibold text-error" v-if="isFailed">
@@ -44,7 +44,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import apiHandler from '../features/config/api-handler';
 
 export default {
@@ -76,23 +75,13 @@ export default {
 		},
 		async submit() {
 			if (!this.checkForm()) return;
+
+			const Result = await apiHandler.PRE_API.Login(this.username, this.password)
 			
-			try {
-				const res = await axios.post(apiHandler.BASE_API + apiHandler.END_API.login, {
-					"Username": this.username,
-					"Password": this.password,
-				})
-				
-				const Result = await res.data
-	
-				if (Result.Status == "bad") return this.isFailed = true
-	
-				if (Result.Status == "ok") {
-					localStorage.setItem("token", Result.Data)
-					return this.$router.push({ name: "Home" })
-				}
-			} catch (error) {
-				console.log(error)
+			if (Result.Status == "bad") return this.isFailed = true
+			if (Result.Status == "ok") {
+				localStorage.setItem("token", Result.Data)
+				return this.$router.push({ name: "Home" })
 			}
 		},
 	},

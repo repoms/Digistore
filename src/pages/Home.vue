@@ -1,22 +1,31 @@
 
 <template>
-    <Navbar />
-    <div class="min-h-screen">
-        <div class="container mx-auto w-5/6 flex justify-center items-center flex-wrap p-6 py-10">
-            <Card v-for="product in allProduct" :product="product"/>
-        </div>
+    <div class="w-full h-full pb-6 grid grid-cols-8 gap-3 gap-y-5">
+        <ProductCard v-for="product in allProduct" :product="product"/>
     </div>
 </template>
 
 <script>
-import Navbar from '../components/Navbar.vue';
-import Card from '../components/Card.vue';
+import ProductCard from './components/ProductCard.vue';
+import apiHandler from '../features/config/api-handler'
 
 export default {
     inject: ["allProduct"],
-    components: {
-        Navbar,
-        Card,
+    data() {
+        return {
+            allProduct: []
+        }
     },
+    components: {
+        ProductCard,
+    },
+    async beforeMount() {
+        const Result = await apiHandler.PRE_API.GetLatestProduct()
+        console.log(Result)
+
+        if (Result.Status == "ok") {
+            this.allProduct = JSON.parse(Result.Data)
+        }
+    }
 }
 </script>
