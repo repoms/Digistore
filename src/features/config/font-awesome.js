@@ -16,10 +16,28 @@ import {
     faPlus,
     faXmark,
     faCircleCheck,
+    faMinus,
+    faSpinner,
+    faBusinessTime,
+    faBox,
+    faTruckRampBox,
+    faTruckFast,
+    faHouseCircleCheck,
+    faBoxOpen,
+    faCircleXmark,
 } from '@fortawesome/free-solid-svg-icons'
 
 const FaSetup = () => {
     library.add(
+        faBusinessTime,
+        faBox,
+        faTruckRampBox,
+        faTruckFast,
+        faHouseCircleCheck,
+        faBoxOpen,
+        faCircleXmark,
+        faSpinner,
+        faMinus,
         faCircleCheck,
         faXmark,
         faPlus,

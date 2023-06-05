@@ -37,7 +37,7 @@
                 <TextInput v-model="stock" class="col-span-4" :number="true" placeholder="0" />
                 
                 <p class="justify-self-end place-self-center col-start-1">Description</p>
-                <textarea v-model="description" rows="5" class="textarea textarea-bordered col-span-4"></textarea>
+                <textarea v-model="description" rows="7" class="textarea textarea-bordered col-span-4 textarea-sm"></textarea>
 			</div>
             
             <div class="mt-16">
@@ -52,7 +52,7 @@
     </div>
 
     <div class="modal" :class="checkLoading">
-        <font-awesome-icon icon="fa-solid fa-parachute-box" class="animate-spin w-36 h-36" />
+        <font-awesome-icon icon="fa-solid fa-spinner" class="animate-spin w-36 h-36" />
     </div>
 
 
@@ -61,9 +61,9 @@
 
 <script>
 import ProductCardSeller from '../components/ProductCardSeller.vue';
-import TextInput from '../components/TextInput.vue';
+import TextInput from '../../components/TextInput.vue';
 import { toFormData } from 'axios'
-import ButtonFileInput from '../components/ButtonFileInput.vue';
+import ButtonFileInput from '../../components/ButtonFileInput.vue';
 import apiHandler from '../../../features/config/api-handler';
 import { useNotificationStore } from '../../../features/stores/notification';
 
@@ -122,13 +122,13 @@ export default {
 
             if (Result.Status == "ok") {
                 this.loading = false
-                this.notifStore.addNotif("success", Result.Message, "circle-check")
+                this.notifStore.addNotif("success", Result.Message)
                 return
             }
             
             if (Result.Status == "bad") {
                 this.loading = false
-                this.notifStore.addNotif("error", Result.Message, "xmark")
+                this.notifStore.addNotif("error", Result.Message)
             }
         }
     }

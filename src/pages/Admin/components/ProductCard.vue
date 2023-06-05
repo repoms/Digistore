@@ -2,9 +2,14 @@
 <template>
     <div class="card card-compact shadow-xl border rounded-md w-full">
         <figure>
-            <img :src="GetFirstImage" alt="Produk" />
+            <img :src="GetFirstImage" alt="Produk" class="aspect-square" />
         </figure>
         <div class="card-body gap-0">
+            <div class="card-actions justify-end -mt-9 mb-5 -mr-3 ">
+				<div class="badge badge-primary rounded-md">
+					{{ product.SellerName }}
+				</div>
+			</div>
             <p class="font-semibold">{{ GetTitle }}</p>
             <div class="text-orange-400 font-semibold w-full">
                 {{ GetPrice }}
@@ -12,7 +17,6 @@
             <div class="font-medium flex justify-start">
                 Stok <span class="font-semibold ml-2">{{ product.Stock == 0 ? "Kosong" : product.Stock }}</span>
             </div>
-            <p class="text-xs">Penjualan 0</p>
 
             <div class="card-actions justify-center mt-2">
                 <button @click="toEditProduct" class="btn btn-xs bg-primary border-0">Edit</button>
@@ -81,7 +85,7 @@ export default {
     methods: {
         toEditProduct() {
             this.$router.push({
-                name: "TokoEditProduct",
+                name: "AdminEditProduct",
                 params: { guid: this.product.Guid }
             })
         },

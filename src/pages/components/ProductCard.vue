@@ -10,18 +10,20 @@
 					{{ product.SellerName }}
 				</div>
 			</div>
-			<p class="font-semibold">{{ product.Title }}</p>
+			<p class="font-semibold">{{ GetTitle }}</p>
 			<div class="text-primary font-semibold w-full">
-				Rp{{ product.Price }}
+				{{ GetPrice }}
 			</div>
 			<div class="font-medium flex justify-start">
-				Stok <span class="font-semibold ml-2">{{ product.Stock }}</span>
+				Stok <span class="font-semibold ml-2">{{ product.Stock == 0 ? "Kosong" : product.Stock }}</span>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+import utils from '../../features/utils'
+
 export default {
 	props: ["product"],
 	computed: {
@@ -30,6 +32,13 @@ export default {
             if (image.length > 0) return image[0]
             return "https://ik.imagekit.io/reforms/user/default-image.png"
         },
+		GetPrice() {
+			return utils.FormatCurrency(this.product.Price)
+		},
+		GetTitle() {
+			if (this.product.Title.length > 30) return this.product.Title.slice(0, 27) + "..."
+            return this.product.Title
+		}
 	},
 	methods: {
 		toProduct() {

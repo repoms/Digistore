@@ -3,7 +3,7 @@
     <div class="card min-w-min mx-7 p-6 shadow-xl bg-base-100">
         <!-- Title -->
         <div class="text-xl font-semibold inline-block">
-            Edit Produk
+            <span class="text-primary">{{ sellerName }}</span> > Edit Produk
         </div>
 
         <div class="divider"></div>
@@ -60,11 +60,11 @@
 
 
 <script>
-import TextInput from '../../components/TextInput.vue';
+import TextInput from '../components/TextInput.vue';
 import { toFormData } from 'axios'
-import ButtonFileInput from '../../components/ButtonFileInput.vue';
-import apiHandler from '../../../features/config/api-handler';
-import { useNotificationStore } from '../../../features/stores/notification';
+import ButtonFileInput from '../components/ButtonFileInput.vue';
+import apiHandler from '../../features/config/api-handler';
+import { useNotificationStore } from '../../features/stores/notification';
 
 export default {
     setup() {
@@ -81,6 +81,7 @@ export default {
             price: "",
             stock: "",
             description: "",
+            sellerName: "",
             images: [],
             lastImage: [],
             loading: false,
@@ -149,6 +150,7 @@ export default {
             this.description = Data.Description
             this.price = Data.Price
             this.stock = Data.Stock
+            this.sellerName = Data.SellerName
 
             // cek gambarny null atau tidak
             if (!Data.Image) return

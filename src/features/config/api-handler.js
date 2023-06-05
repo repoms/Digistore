@@ -7,10 +7,26 @@ const END_API = {
     register: "register/",
     role: "role/",
     user: "user/",
+    userAdmin: "user/admin/",
+    userAll: "user/all/",
     product: "product/",
     productUser: "product/user/",
     productUpdate: "product/update/",
     productLatest: "product/latest/",
+    cart: "cart/",
+    invoice: "invoice/",
+    invoiceCancel: "invoice/cancel",
+    invoiceSeller: "invoice/seller",
+    invoiceSellerDone: "invoice/seller/done",
+    invoiceDone: "invoice/done/",
+    invoiceAll: "invoice/all/",
+    invoiceStatus: "invoice/status/",
+    invoiceStatusReturn: "invoice/status/return",
+    checkout: "invoice/checkout/",
+    saldo: "invoice/saldo/",
+    courier: "courier/",
+    courierOrder: "courier/order/",
+    courierDone: "courier/done/",
 }
 
 const ErrorHandle = (error) => {
@@ -131,6 +147,25 @@ const UserUpdateUser = async (displayName) => {
     }
 }
 
+const AdminUpdateUser = async (guid, displayName, username) => {
+    try {
+        const TOKEN = localStorage.getItem("token")
+        const res = await axios.post(
+            BASE_API + END_API.userAdmin,
+            {
+                "Guid": guid,
+                "Username": username,
+                "DisplayName": displayName,
+            },
+            { headers: { "Authorization": "Bearer " + TOKEN } }
+        )
+
+        return res.data
+    } catch (error) {
+        return ErrorHandle(error)
+    }
+}
+
 const SellerAddNewProduct = async (formData) => {
     try {
         const TOKEN = localStorage.getItem("token")
@@ -164,7 +199,6 @@ const SellerUpdateProduct = async (formData) => {
 const SellerDeleteProduct = async (guid) => {
     try {
         const TOKEN = localStorage.getItem("token")
-        console.log(BASE_API + END_API.product + guid)
         const res = await axios.delete(
             BASE_API + END_API.product + guid,
             { headers: { "Authorization": "Bearer " + TOKEN } }
@@ -175,6 +209,315 @@ const SellerDeleteProduct = async (guid) => {
         return ErrorHandle(error)
     }
 }
+
+const SellerGetInvoice = async () => {
+    try {
+        const TOKEN = localStorage.getItem("token")
+        const res = await axios.get(
+            BASE_API + END_API.invoiceSeller,
+            { headers: { "Authorization": "Bearer " + TOKEN } }
+        )
+
+        return res.data
+    } catch (error) {
+        return ErrorHandle(error)
+    }
+}
+
+const SellerGetInvoiceDone = async () => {
+    try {
+        const TOKEN = localStorage.getItem("token")
+        const res = await axios.get(
+            BASE_API + END_API.invoiceSellerDone,
+            { headers: { "Authorization": "Bearer " + TOKEN } }
+        )
+
+        return res.data
+    } catch (error) {
+        return ErrorHandle(error)
+    }
+}
+
+const AddToCart = async (productId, qty) => {
+    try {
+        const TOKEN = localStorage.getItem("token")
+        const res = await axios.post(
+            BASE_API + END_API.cart,
+            { "ProductId": productId, "Qty": qty },
+            { headers: { "Authorization": "Bearer " + TOKEN } }
+        )
+
+        return res.data
+    } catch (error) {
+        return ErrorHandle(error)
+    }
+}
+
+const GetCart = async () => {
+    try {
+        const TOKEN = localStorage.getItem("token")
+        const res = await axios.get(
+            BASE_API + END_API.cart,
+            { headers: { "Authorization": "Bearer " + TOKEN } }
+        )
+
+        return res.data
+    } catch (error) {
+        return ErrorHandle(error)
+    }
+}
+
+const DeleteCart = async (guid) => {
+    try {
+        const TOKEN = localStorage.getItem("token")
+        const res = await axios.delete(
+            BASE_API + END_API.cart + guid,
+            { headers: { "Authorization": "Bearer " + TOKEN } }
+        )
+
+        return res.data
+    } catch (error) {
+        return ErrorHandle(error)
+    }
+}
+
+const Checkout = async () => {
+    try {
+        const TOKEN = localStorage.getItem("token")
+        const res = await axios.post(
+            BASE_API + END_API.checkout,
+            {},
+            { headers: { "Authorization": "Bearer " + TOKEN } }
+        )
+
+        return res.data
+    } catch (error) {
+        return ErrorHandle(error)
+    }
+}
+
+const GetSaldo = async () => {
+    try {
+        const TOKEN = localStorage.getItem("token")
+        const res = await axios.get(
+            BASE_API + END_API.saldo,
+            { headers: { "Authorization": "Bearer " + TOKEN } }
+        )
+
+        return res.data
+    } catch (error) {
+        return ErrorHandle(error)
+    }
+}
+
+const GetInvoiceUser = async () => {
+    try {
+        const TOKEN = localStorage.getItem("token")
+        const res = await axios.get(
+            BASE_API + END_API.invoice,
+            { headers: { "Authorization": "Bearer " + TOKEN } }
+        )
+
+        return res.data
+    } catch (error) {
+        return ErrorHandle(error)
+    }
+}
+
+const GetInvoiceDoneUser = async () => {
+    try {
+        const TOKEN = localStorage.getItem("token")
+        const res = await axios.get(
+            BASE_API + END_API.invoiceDone,
+            { headers: { "Authorization": "Bearer " + TOKEN } }
+        )
+
+        return res.data
+    } catch (error) {
+        return ErrorHandle(error)
+    }
+}
+
+const GetAllInvoice = async () => {
+    try {
+        const TOKEN = localStorage.getItem("token")
+        const res = await axios.get(
+            BASE_API + END_API.invoiceAll,
+            { headers: { "Authorization": "Bearer " + TOKEN } }
+        )
+    
+        return res.data
+    } catch (error) {
+        return ErrorHandle(error)
+    }
+}
+
+const UpdateInvoiceStatus = async (guid, statCode) => {
+    try {
+        const TOKEN = localStorage.getItem("token")
+        const res = await axios.post(
+            BASE_API + END_API.invoiceStatus,
+            { "Guid": guid, "StatusCode": statCode },
+            { headers: { "Authorization": "Bearer " + TOKEN } }
+        )
+    
+        return res.data
+    } catch (error) {
+        return ErrorHandle(error)
+    }
+}
+
+const InvoiceStatusReturn = async (guid, statCode) => {
+    try {
+        const TOKEN = localStorage.getItem("token")
+        const res = await axios.post(
+            BASE_API + END_API.invoiceStatusReturn,
+            { "Guid": guid, "StatusCode": statCode },
+            { headers: { "Authorization": "Bearer " + TOKEN } }
+        )
+    
+        return res.data
+    } catch (error) {
+        return ErrorHandle(error)
+    }
+}
+
+const GetAllUser = async () => {
+    try {
+        const TOKEN = localStorage.getItem("token")
+        const res = await axios.get(
+            BASE_API + END_API.userAll,
+            { headers: { "Authorization": "Bearer " + TOKEN } }
+        )
+
+        return res.data
+    } catch (error) {
+        return ErrorHandle(error)
+    }
+}
+
+const GetUserByGuid = async (guid) => {
+    try {
+        const TOKEN = localStorage.getItem("token")
+        const res = await axios.get(
+            BASE_API + END_API.user + guid,
+            { headers: { "Authorization": "Bearer " + TOKEN } }
+        )
+
+        return res.data
+    } catch (error) {
+        return ErrorHandle(error)
+    }
+}
+
+const AddSaldo = async (guid, saldo) => {
+    try {
+        const TOKEN = localStorage.getItem("token")
+        const res = await axios.post(
+            BASE_API + END_API.saldo,
+            {
+                "UserId": guid,
+                "Saldo": saldo,
+            },
+            { headers: { "Authorization": "Bearer " + TOKEN } }
+        )
+
+        return res.data
+    } catch (error) {
+        return ErrorHandle(error)
+    }
+}
+
+const ReduceSaldo = async (guid, saldo) => {
+    return AddSaldo(guid, -saldo)
+}
+
+const DeleteUser = async (guid) => {
+    try {
+        const TOKEN = localStorage.getItem("token")
+        const res = await axios.delete(
+            BASE_API + END_API.user + guid,
+            { headers: { "Authorization": "Bearer " + TOKEN } }
+        )
+
+        return res.data
+    } catch (error) {
+        return ErrorHandle(error)
+    }
+}
+
+const CourierGetOpenOrder = async () => {
+    try {
+        const TOKEN = localStorage.getItem("token")
+        const res = await axios.get(
+            BASE_API + END_API.courier,
+            { headers: { "Authorization": "Bearer " + TOKEN } }
+        )
+    
+        return res.data
+    } catch (error) {
+        return ErrorHandle(error)
+    }
+}
+
+const CourierGetOrder = async () => {
+    try {
+        const TOKEN = localStorage.getItem("token")
+        const res = await axios.get(
+            BASE_API + END_API.courierOrder,
+            { headers: { "Authorization": "Bearer " + TOKEN } }
+        )
+    
+        return res.data
+    } catch (error) {
+        return ErrorHandle(error)
+    }
+}
+
+const CourierGetOrderDone = async () => {
+    try {
+        const TOKEN = localStorage.getItem("token")
+        const res = await axios.get(
+            BASE_API + END_API.courierDone,
+            { headers: { "Authorization": "Bearer " + TOKEN } }
+        )
+    
+        return res.data
+    } catch (error) {
+        return ErrorHandle(error)
+    }
+}
+
+const CourierTakeOrder = async (guid, statCode) => {
+    try {
+        const TOKEN = localStorage.getItem("token")
+        const res = await axios.post(
+            BASE_API + END_API.courier,
+            { "Guid": guid, "StatusCode": statCode },
+            { headers: { "Authorization": "Bearer " + TOKEN } }
+        )
+    
+        return res.data
+    } catch (error) {
+        return ErrorHandle(error)
+    }
+}
+
+const RemoveInvoice = async (guid) => {
+    try {
+        const TOKEN = localStorage.getItem("token")
+        const res = await axios.post(
+            BASE_API + END_API.invoiceCancel,
+            { "Guid": guid },
+            { headers: { "Authorization": "Bearer " + TOKEN } }
+        )
+    
+        return res.data
+    } catch (error) {
+        return ErrorHandle(error)
+    }
+}
+
 
 
 export default {
@@ -190,8 +533,31 @@ export default {
         GetProductByGuid,
         GetLatestProduct,
         UserUpdateUser,
+        AdminUpdateUser,
         SellerAddNewProduct,
         SellerUpdateProduct,
         SellerDeleteProduct,
+        SellerGetInvoice,
+        SellerGetInvoiceDone,
+        AddToCart,
+        GetCart,
+        DeleteCart,
+        Checkout,
+        GetSaldo,
+        GetInvoiceUser,
+        GetInvoiceDoneUser,
+        GetAllInvoice,
+        UpdateInvoiceStatus,
+        InvoiceStatusReturn,
+        GetAllUser,
+        GetUserByGuid,
+        DeleteUser,
+        AddSaldo,
+        ReduceSaldo,
+        CourierGetOpenOrder,
+        CourierTakeOrder,
+        CourierGetOrder,
+        CourierGetOrderDone,
+        RemoveInvoice,
     }
 }

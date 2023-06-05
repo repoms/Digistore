@@ -4,7 +4,7 @@
         <div class="alert shadow shadow-gray-600 text-white duration-300 transition-all " :class="alertColor + slideClass" >
             <div>
                 <!-- Icon -->
-                <font-awesome-icon :icon="['fas', notif.icon]" />
+                <font-awesome-icon :icon="['fas', iconClass]" />
                 <div>
                     <h3 class="font-bold">{{ statusField }}</h3>
                     <div class="text-xs">{{ notif.message }}</div>
@@ -58,6 +58,10 @@ export default {
         },
         slideClass() {
             return this.trans ? " translate-x-0 opacity-100 scale-100" : " translate-x-full opacity-0 scale-75"
+        },
+        iconClass() {
+            if (this.notif.status == "success") return "circle-check"
+            else if (this.notif.status == "error") return "xmark"
         }
     },
     mounted() {

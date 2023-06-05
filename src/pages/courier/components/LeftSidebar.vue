@@ -7,7 +7,7 @@
                 <router-link :to="{name: 'Home'}">
                     <!-- logo -->
                     <div class="indicator">
-                        <span class="indicator-item indicator-bottom indicator-center ml-10 mb-1 text-secondary text-sm">admin</span>
+                        <span class="indicator-item indicator-bottom indicator-center ml-10 mb-1 text-secondary text-sm">kurir</span>
                         <img src="/img/digistore-logo.svg" class="w-48 ml-6">
                     </div>
                 </router-link>
@@ -29,7 +29,7 @@
 
 
 <script>
-import sidebarRoutes from '../../../router/sidebar-admin';
+import sidebarRoutes from '../../../router/sidebar-courier';
 import SidebarSubmenu from './SidebarSubmenu.vue';
 import { useStateStore } from '../../../features/stores/state'
 

@@ -18,7 +18,7 @@
 
 				<div class="form-control">
 					<label class="label">
-						<span class="text-base font-semibold label-text">Siapa kamu?</span>
+						<span class="text-base font-semibold label-text">Role</span>
 					</label>
 
 					<label class="swap swap-flip">
@@ -40,18 +40,14 @@
 						Register
 					</button>
 				</div>
-
-				<router-link :to="{name: 'Login'}" class="link text-sm text-primary flex justify-center mt-5">
-					Sudah punya akun?
-				</router-link>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import apiHandler from '../features/config/api-handler';
-import { useNotificationStore } from '../features/stores/notification';
+import apiHandler from '../../features/config/api-handler';
+import { useNotificationStore } from '../../features/stores/notification';
 
 
 export default {
@@ -96,7 +92,9 @@ export default {
 			}
 			else if (Result.Status == "ok") {
 				this.notifStore.addNotif("success", Result.Message)
-				this.$router.push({ name: "Login" })
+                setTimeout(() => {
+                    this.$router.push({ name: "Admin" })
+                }, 1000);
 			}
 		},
 	},

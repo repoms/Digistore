@@ -4,9 +4,6 @@
         <!-- Title -->
         <div class="text-xl font-semibold inline-block">
             Produk
-            <!-- <div class="float-right">
-                <button class="btn btn-primary btn-sm">Tambah Produk Baru</button>
-            </div> -->
         </div>
 
         <div class="divider"></div>
@@ -36,7 +33,7 @@ export default {
         const UserResult = await apiHandler.PRE_API.GetSelfInfo()
         const User = JSON.parse(UserResult.Data)
         console.log(User)
-        const Result = await apiHandler.PRE_API.GetProductsByUser(User.GUID)
+        const Result = await apiHandler.PRE_API.GetProductsByUser(User.Guid)
 
         console.log(Result)
 

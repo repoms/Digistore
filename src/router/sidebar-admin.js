@@ -1,46 +1,24 @@
 
 const sidebarRoutes = [
     {
-        path: "Profile",
+        path: "Admin",
         icon: "fa-solid fa-user",
-        name: "Profile",
+        name: "User",
     },
     {
-        path: "",
-        icon: "fa-solid fa-cart-shopping",
-        name: "Keranjang",
+        path: "AdminProduct",
+        icon: "fa-solid fa-gifts",
+        name: "Produk",
     },
     {
-        path: "",
+        path: "AdminInvoice",
         icon: "fa-solid fa-clipboard",
-        name: "Pesanan Saya",
+        name: "Pesanan",
     },
     {
-        path: "",
-        icon: "fa-solid fa-shop",
-        name: "Toko",
-        submenu: [
-            {
-                path: "TokoProduct",
-                icon: "fa-solid fa-gifts",
-                name: "Produk",
-            },
-            {
-                path: "TokoNewProduct",
-                icon: "fa-solid fa-circle-plus",
-                name: "Tambah Produk",
-            },
-            {
-                path: "",
-                icon: "fa-solid fa-parachute-box",
-                name: "Pengiriman",
-            },
-            {
-                path: "",
-                icon: "fa-solid fa-gear",
-                name: "Pengaturan",
-            },
-        ]
+        path: "AdminSettings",
+        icon: "fa-solid fa-gear",
+        name: "Pengaturan",
     },
 ]
 

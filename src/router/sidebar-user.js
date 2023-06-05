@@ -6,14 +6,19 @@ const sidebarRoutes = [
         name: "Profile",
     },
     {
-        path: "",
+        path: "Cart",
         icon: "fa-solid fa-cart-shopping",
         name: "Keranjang",
     },
     {
-        path: "",
-        icon: "fa-solid fa-clipboard",
+        path: "Invoice",
+        icon: "fa-solid fa-truck-fast",
         name: "Pesanan Saya",
+    },
+    {
+        path: "InvoiceDone",
+        icon: "fa-solid fa-clipboard",
+        name: "Pesanan Selesai",
     },
     {
         path: "",
@@ -31,16 +36,21 @@ const sidebarRoutes = [
                 name: "Tambah Produk",
             },
             {
-                path: "",
+                path: "TokoDelivery",
                 icon: "fa-solid fa-parachute-box",
                 name: "Pengiriman",
             },
             {
-                path: "",
-                icon: "fa-solid fa-gear",
-                name: "Pengaturan",
+                path: "TokoInvoice",
+                icon: "fa-solid fa-clipboard",
+                name: "Pesanan Selesai",
             },
         ]
+    },
+    {
+        path: "Settings",
+        icon: "fa-solid fa-gear",
+        name: "Pengaturan",
     },
 ]
 

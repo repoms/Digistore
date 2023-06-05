@@ -11,7 +11,6 @@ export const useNotificationStore = defineStore('notification', {
             this.listNotif.push({
                 status,
                 message,
-                icon,
             })
         },
         removeNotif() {

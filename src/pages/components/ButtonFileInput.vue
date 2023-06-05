@@ -22,9 +22,9 @@
 </template>
 
 <script>
-import utils from '../../../features/utils'
-import apiHandler from '../../../features/config/api-handler'
-import { useNotificationStore } from '../../../features/stores/notification'
+import utils from '../../features/utils'
+import apiHandler from '../../features/config/api-handler'
+import { useNotificationStore } from '../../features/stores/notification'
 
 const EXTENSION = ["png", "jpg", "jpeg", "webp", "svg"]
 
@@ -62,7 +62,7 @@ export default {
             let name = files[0].name
             let ext = name.split('.').pop();
             if (!EXTENSION.includes(ext)) {
-                this.notifStore.addNotif("error", "File must be Image", "xmark")
+                this.notifStore.addNotif("error", "File must be Image")
                 return
             }
             this.name = name

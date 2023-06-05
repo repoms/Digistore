@@ -11,7 +11,7 @@
     </div>
 
     <!-- Notification -->
-    <div class="toast toast-end toast-top w-1/5 mr-3">
+    <div class="toast toast-end toast-top w-1/5 mr-3 mt-16">
         <Notification v-for="notif in notifStore.listNotif" :notif="notif" />
     </div>
 </template>

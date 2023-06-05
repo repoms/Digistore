@@ -2,9 +2,6 @@
 	<div class="flex items-center mt-10">
 		<div class="card mx-auto w-full max-w-sm shadow-2xl bg-base-100">
 			<div class="card-body">
-				<div class="text-center font-semibold text-error" v-if="isFailed">
-					Login Failed
-				</div>
 				<div class="form-control">
 					<label class="label">
 						<span class="text-base font-semibold label-text">Username</span>
@@ -16,7 +13,7 @@
 					<label class="label">
 						<span class="text-base font-semibold label-text">Password</span>
 					</label>
-					<input v-model="password" type="password" class="text-sm input input-bordered" :class="checkPassword" />
+					<input @keyup.enter="submit" v-model="password" type="password" class="text-sm input input-bordered" :class="checkPassword" />
 					<label class="label">
 						<a href="#" class="text-s italic label-text-alt link link-hover">Forgot password?</a>
 					</label>
@@ -31,7 +28,7 @@
 				<div class="form-control">
 					<label class="scale-[.9] cursor-pointer label justify-center">
 						<span class="label-text mr-3">Remember me</span>
-						<input type="checkbox" class="checkbox checkbox-warning" />
+						<input v-model="rememberMe" type="checkbox" class="checkbox checkbox-warning" />
 					</label>
 				</div>
 
@@ -45,15 +42,20 @@
 
 <script>
 import apiHandler from '../features/config/api-handler';
+import { useNotificationStore } from '../features/stores/notification';
 
 export default {
+	setup() {
+        const notifStore = useNotificationStore()
+        return { notifStore }
+    },
 	data() {
 		return {
 			username: null,
 			password: null,
+			rememberMe: false,
 			errors: 0,
 			classError: "input-error",
-			isFailed: false,
 		};
 	},
 	computed: {
@@ -78,12 +80,31 @@ export default {
 
 			const Result = await apiHandler.PRE_API.Login(this.username, this.password)
 			
-			if (Result.Status == "bad") return this.isFailed = true
-			if (Result.Status == "ok") {
+			if (Result.Status == "bad") {
+				this.notifStore.addNotif("error", Result.Message)
+			}
+			else if (Result.Status == "ok") {
 				localStorage.setItem("token", Result.Data)
-				return this.$router.push({ name: "Home" })
+				localStorage.setItem("rm", this.rememberMe)
+
+				if (this.rememberMe) {
+					localStorage.setItem("username", this.username)
+				}
+
+				this.notifStore.addNotif("success", "Login Success")
+				setTimeout(() => {
+					this.$router.go(0)
+				}, 1000);
+				this.$router.push({ name: "Home" })
 			}
 		},
 	},
+	mounted() {
+		this.rememberMe = JSON.parse(localStorage.getItem("rm"))
+		let username = localStorage.getItem("username")
+		if (this.rememberMe) {
+			this.username = username || ""
+		}
+	}
 };
 </script>

@@ -3,40 +3,45 @@
     <div class="card min-w-min p-6 shadow-xl bg-base-100">
         <!-- Title -->
         <div class="text-xl font-semibold inline-block">
-            Produk
+            User
+            <span @click="$router.push({ name: 'AdminAddUser' })" class="btn btn-sm bg-primary border-0 float-right">Add New User</span>
         </div>
 
         <div class="divider"></div>
 
         <!-- Konten -->
         <div class="w-full h-full pb-6 grid grid-cols-6 gap-3 gap-y-5">
-            <ProductCard v-for="product in allProduct" :product="product" />
+            <UserCard v-for="user in users" :user="user" />
         </div>
     </div>
 </template>
 
 
 <script>
-import apiHandler from '../../features/config/api-handler';
-import ProductCard from './components/ProductCard.vue';
+import apiHandler from '../../features/config/api-handler'
+import UserCard from './components/UserCard.vue';
 
 export default {
     components: {
-        ProductCard,
+        UserCard,
     },
     data() {
         return {
-            allProduct: []
+            users: []
         }
     },
     async mounted() {
-        const Result = await apiHandler.PRE_API.GetLatestProduct()
+        const Result = await apiHandler.PRE_API.GetAllUser()
         console.log(Result)
 
         if (Result.Status == "ok") {
+            this.users = JSON.parse(Result.Data)
+            console.log(this.users)
+            return
+        }
+        
+        if (Result.Status == "bad") {
             console.log(Result.Message)
-            this.allProduct = JSON.parse(Result.Data)
-            console.log(this.allProduct)
         }
     }
 }
