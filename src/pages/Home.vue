@@ -4,30 +4,45 @@
         <div class="hero-overlay rounded-full bg-opacity-70"></div>
         <div class="hero-content text-left text-neutral-content">
             <div class="max-w-md">
-                <h1 class="text-5xl my-2 font-bold outline px-2 outline-offset-2 rounded">Produk Terbaru</h1>
+                <h1 class="text-5xl my-2 font-bold px-2 rounded">Produk Terbaru</h1>
             </div>
         </div>
     </div>
 
     <div class="w-full h-full pb-6 grid grid-cols-8 gap-3 gap-y-5">
-
-        <ProductCard v-for="product in allProduct" :product="product"/>
+        <!-- punya all -->
+        <ProductCard v-for="product in allProduct" :product="product" v-if="searchStore.keyword == ''" />
+        <!-- punya filter -->
+        <ProductCard v-for="product in filterProduct" :product="product" v-else />
     </div>
 </template>
 
 <script>
 import ProductCard from './components/ProductCard.vue';
 import apiHandler from '../features/config/api-handler'
+import { useSearchStore } from '../features/stores/search';
 
 export default {
-    inject: ["allProduct"],
+    setup() {
+        const searchStore = useSearchStore()
+        return { searchStore }
+    },
     data() {
         return {
-            allProduct: []
+            allProduct: [],
         }
     },
     components: {
         ProductCard,
+    },
+    computed: {
+        filterProduct() {
+            return this.allProduct.filter(produk => {
+                console.log(produk.Title)
+                let dapat = produk.Title.toLowerCase().includes(this.searchStore.keyword.toLowerCase()) || produk.SellerName.toLowerCase().includes(this.searchStore.keyword.toLowerCase())
+                return dapat
+            })
+        }
     },
     async beforeMount() {
         const Result = await apiHandler.PRE_API.GetLatestProduct()

@@ -13,7 +13,7 @@
 				<span>
 					<font-awesome-icon icon="fa-solid fa-magnifying-glass" />
 				</span>
-				<input type="text" placeholder="Search…" class="input input-bordered w-full input-sm" />
+				<input v-model="inputSearch" type="text" placeholder="Search…" class="input input-bordered w-full input-sm" />
 			</div>
 		</div>
 	</div>
@@ -44,15 +44,21 @@
 
 <script>
 import apiHandler from '../../features/config/api-handler'
+import { useSearchStore } from '../../features/stores/search'
 import utils from '../../features/utils'
 
 export default {
+	setup() {
+        const searchStore = useSearchStore()
+        return { searchStore }
+    },
 	data() {
 		return {
 			displayName: "",
 			isAuth: false,
 			role: "",
 			saldo: 0,
+			inputSearch: "",
 		}
 	},
 	computed: {
@@ -69,6 +75,8 @@ export default {
 		}
 	},
 	async mounted() {
+		this.searchStore.keyword = ""
+
 		const Result = await apiHandler.PRE_API.GetSelfInfo()
 		const ResultSaldo = await apiHandler.PRE_API.GetSaldo()
 		console.log(ResultSaldo)
@@ -82,6 +90,12 @@ export default {
 			const Data = JSON.parse(Result.Data)
 			this.displayName = Data.DisplayName
 			this.role = Data.Role
+		}
+	},
+	watch: {
+		inputSearch(value, oldValue) {
+			this.searchStore.keyword = value
+			console.log(this.searchStore.keyword)
 		}
 	}
 }
